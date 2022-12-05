@@ -1,0 +1,21 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://pawhbgmaiy4jh08bnpd9:pscale_pw_akXBktkpnmpbPFOCikxFU9HOH9He5aZYHw5lLqIrfL3@us-east.connect.psdb.cloud/laporan-bencana?sslmode=require&sslcert=/etc/pki/tls/certs/ca-bundle.crt"
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Laporan {
+  id              Int       @id @default(autoincrement())
+  namaPelapor     String
+  nomorPelapor    Int
+  gambar          String
+  lokasi          String
+  deskripsi       String
+}
