@@ -8,6 +8,7 @@ class ReportsHandler {
 
     this.postReportHandler = this.postReportHandler.bind(this);
     this.getReportsHandler = this.getReportsHandler.bind(this);
+    this.deleteReportByIdHandler = this.deleteReportByIdHandler.bind(this);
   }
 
   async postReportHandler(request, h) {
@@ -88,6 +89,37 @@ class ReportsHandler {
         data: {
           reports,
         },
+      };
+    } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: 'fail',
+          message: error.message,
+        });
+
+        response.code(error.statusCode);
+        return response;
+      }
+
+      const response = h.response({
+        status: 'error',
+        message: 'Maaf, Server Mengalami Kegagalan.',
+      });
+
+      response.code(500);
+      return response;
+    }
+  }
+
+  async deleteReportByIdHandler(request, h) {
+    try {
+      const { id } = request.params;
+
+      await this._service.deleteReportById(id);
+
+      return {
+        status: 'success',
+        message: 'Laporan berhasil dihapus',
       };
     } catch (error) {
       if (error instanceof ClientError) {

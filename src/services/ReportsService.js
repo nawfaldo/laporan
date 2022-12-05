@@ -33,6 +33,18 @@ class ReportsService {
 
     return result;
   }
+
+  async deleteReportById(id) {
+    const result = await prisma.laporan.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!result.length) {
+      throw new NotFoundError('Song gagal dihapus. Id tidak ditemukan');
+    }
+  }
 }
 
 module.exports = ReportsService;
